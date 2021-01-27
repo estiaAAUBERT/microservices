@@ -5,9 +5,11 @@ import com.course.client.proxies.MsProductProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ClientController {
@@ -23,5 +25,15 @@ public class ClientController {
         model.addAttribute("products", products);
 
         return "index";
+    }
+
+    @RequestMapping("/product-detail/{id}")
+    public String detail(@PathVariable Long id, Model model){
+
+        Optional<ProductBean> product = msProductProxy.get(id);
+
+        model.addAttribute("product",product);
+
+        return "product-detail";
     }
 }
